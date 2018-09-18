@@ -1,0 +1,27 @@
+# This is a manual for vim/mvim config
+1. install 'brew': 
+Run: $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+Run: $ brew update
+Run: $ brew install macvim
+Run: $ brew link macvim
+2. install vundle for plugin mangement
+Run: $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+3. get vim config called .vimrc
+Run: $ git clone https://github.com/JIAKanghao/Vim-config.git ~/Desktop (if you already got this git repository, just ignored)
+Run: $ cp ~/Desktop/Vim-config/.vimrc ~
+4. create a folder to manage vim theme what you want
+Run: $ cd ~/.vim
+Run: $ mkdir colors
+5. download vim theme called solarized
+Run: $ git clone git://github.com/altercation/vim-colors-solarized.git ~/.vim/bundle
+Run: $ mv ~/.vim/bundle/vim-colors-solarized/solarized.vim ~/.vim/colors/
+6. install plugin in vim
+Run: $ vim 
+Run: :PlugInstall
+
+
+
+Congragulations!!! Now you can use gorgeous vim or mvim by:
+Run: $ vim 
+or 
+Run: $ mvim

@@ -11,8 +11,11 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 " add nerdtree
 Plugin 'scrooloose/nerdtree'
-
-
+" add lightline
+Plugin 'itchyny/lightline.vim'
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ }
 
 
 " All of your Plugins must be added before the following line
@@ -53,4 +56,33 @@ set shiftwidth=6
 set smartindent
 set autoindent
 set hlsearch
+set laststatus=2 " open status line
+set noshowmode
 
+" automatically activate nerdtree 
+autocmd VimEnter * NERDTree
+
+" quit nerdtree while there is no vim activated
+function! NERDTreeQuit()
+  redir => buffersoutput
+  silent buffers
+  redir END
+"                     1BufNo  2Mods.     3File           4LineNo
+  let pattern = '^\s*\(\d\+\)\(.....\) "\(.*\)"\s\+line \(\d\+\)$'
+  let windowfound = 0
+
+  for bline in split(buffersoutput, "\n")
+    let m = matchlist(bline, pattern)
+
+    if (len(m) > 0)
+      if (m[2] =~ '..a..')
+        let windowfound = 1
+      endif
+    endif
+  endfor
+
+  if (!windowfound)
+    quitall
+  endif
+endfunction
+autocmd WinEnter * call NERDTreeQncel find highlightuit()

@@ -39,7 +39,9 @@ if has('gui_running')
     set background=dark
     colorscheme solarized
     " colorscheme elflord
-    nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR> "cancel find highlight
+    
+    "cancel find highlight
+    nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
     map <F3> :NERDTreeMirror<CR>
     map <F3> :NERDTreeToggle<CR>
 else
@@ -62,6 +64,15 @@ set noshowmode
 " automatically activate nerdtree 
 autocmd VimEnter * NERDTree
 
+" double click to open a new tab in nerdtree
+ autocmd VimEnter * call NERDTreeAddKeyMap({ 'key': '<2-LeftMouse>', 'scope': "FileNode", 'callback': "OpenInTab", 'override':1 })
+    function! OpenInTab(node)
+        call a:node.activate({'reuse': 'all', 'where': 't'})
+    endfunction
+
+" show hidden files in nerdtree
+let NERDTreeShowHidden=1
+
 " quit nerdtree while there is no vim activated
 function! NERDTreeQuit()
   redir => buffersoutput
@@ -70,7 +81,6 @@ function! NERDTreeQuit()
 "                     1BufNo  2Mods.     3File           4LineNo
   let pattern = '^\s*\(\d\+\)\(.....\) "\(.*\)"\s\+line \(\d\+\)$'
   let windowfound = 0
-
   for bline in split(buffersoutput, "\n")
     let m = matchlist(bline, pattern)
 
@@ -80,9 +90,9 @@ function! NERDTreeQuit()
       endif
     endif
   endfor
-
   if (!windowfound)
     quitall
   endif
 endfunction
-autocmd WinEnter * call NERDTreeQncel find highlightuit()
+autocmd WinEnter * call NERDTreeQuit()
+
